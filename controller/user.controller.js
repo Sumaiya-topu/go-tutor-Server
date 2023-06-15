@@ -7,5 +7,16 @@ const { createSignUpService } = require("../services/user.service");
 
 //sign up
 exports.signUp = async (req, res, next) => {
-  const user = await createSignUpService(req.body);
+  try {
+    const user = await createSignUpService(req.body);
+    res.status(200).json({
+      status: "success",
+      message: "successfully signup",
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "fail",
+      error: err.message,
+    });
+  }
 };
