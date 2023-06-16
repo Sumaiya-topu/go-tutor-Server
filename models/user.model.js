@@ -40,10 +40,10 @@ const userSchema = mongoose.Schema(
         message: "Passwords don't match!",
       },
     },
-    // referralCode: {
-    //   type: String,
-    //   default: shortid.generate,
-    // },
+    referralCode: {
+      type: String,
+      default: shortid.generate,
+    },
     // commission: {
     //   type: Number,
     //   default: 0,
