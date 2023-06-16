@@ -12,3 +12,7 @@ exports.getUserService = async (filters, queries) => {
   const total = await User.countDocuments(filters);
   return { total, result };
 };
+
+exports.findUserByEmail = async (email) => {
+  return await User.findOne({ email });
+};
