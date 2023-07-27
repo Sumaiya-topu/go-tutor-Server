@@ -9,9 +9,11 @@ const {
   createSignUpService,
   getUserService,
   findUserByEmail,
+  getUserByIdService,
 } = require("../services/user.service");
 const sendEmail = require("../utils/emailSender");
 const { generateToken } = require("../utils/token");
+const { checkWithIdService } = require("../utils/checkWithId");
 
 //get all user
 exports.getUsers = async (req, res) => {
@@ -222,6 +224,42 @@ exports.verifyEmail = async (req, res) => {
     res.status(400).json({
       status: "fail",
       error: error.message,
+    });
+  }
+};
+
+exports.getUserIp = async (req, res) => {
+  const ipAddress = req.ip;
+  // const ipAddress =
+  //   req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  res.send(ipAddress);
+  return ipAddress;
+};
+
+exports.deleteUserIp = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const isIdAvaiable = await checkWithIdService(id, User);
+    if (!isIdAvaiable) {
+      return res.status(400).json({
+        status: "fail",
+        message: "couldn't delete user",
+      });
+    }
+    const user = await getUserByIdService(id);
+
+    console.log(user);
+    const result = await User.updateOne(
+      { _id: id },
+      { $pull: { macAddress: { $eq: user?.macAddress[0] } } }
+    );
+    console.log(result);
+    res.send(result);
+  } catch {
+    res.status(400).json({
+      status: "fail",
+      message: "Internal error. couldn't update user ",
     });
   }
 };

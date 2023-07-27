@@ -16,3 +16,9 @@ exports.getUserService = async (filters, queries) => {
 exports.findUserByEmail = async (email) => {
   return await User.findOne({ email });
 };
+
+exports.getUserByIdService = async (id) => {
+  // const result = await User.findOne({ _id: id }).select("-password ");
+  const result = await User.findOne({ _id: id });
+  return result;
+};

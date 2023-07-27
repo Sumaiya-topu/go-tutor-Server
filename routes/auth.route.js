@@ -5,4 +5,6 @@ const userController = require("../controller/user.controller");
 router.post("/signup", userController.signUp);
 router.post("/login", userController.logIn);
 router.patch("/verify", userController.verifyEmail);
+router.get("/get-user-ip", userController.getUserIp);
+router.post("/delete-ip/:id", userController.deleteUserIp);
 module.exports = router;

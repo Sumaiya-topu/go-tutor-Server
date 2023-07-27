@@ -50,7 +50,7 @@ const userSchema = mongoose.Schema(
     // },
     role: {
       type: String,
-      enum: ["student", "admin", "instructor"],
+      enum: ["student", "admin", "tutor"],
       default: "student",
     },
     isEmailVerified: {
