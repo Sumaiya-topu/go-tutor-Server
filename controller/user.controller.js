@@ -10,6 +10,7 @@ const {
   getUserService,
   findUserByEmail,
   getUserByIdService,
+  updateUserService,
 } = require("../services/user.service");
 const sendEmail = require("../utils/emailSender");
 const { generateToken } = require("../utils/token");
@@ -260,6 +261,48 @@ exports.deleteUserIp = async (req, res) => {
     res.status(400).json({
       status: "fail",
       message: "Internal error. couldn't update user ",
+    });
+  }
+};
+
+exports.updateUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const incomingChangeData = req.body;
+    if (incomingChangeData.email) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Couldn't change your email",
+      });
+    }
+
+    const isIdAvailable = await checkWithIdService(id, User);
+
+    if (!isIdAvailable) {
+      return res.status(400).json({
+        status: "fail",
+        message: "NO such account",
+      });
+    }
+
+    const result = await updateUserService(id, req.body);
+
+    if (!result.modifiedCount) {
+      return res.status(400).json({
+        status: "fail",
+        message: "couldn't updatee",
+      });
+    }
+    res.status(200).json({
+      status: "success",
+      message: "User updated successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Internal error. couldn't update user ",
+      error: error.message,
     });
   }
 };

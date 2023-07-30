@@ -22,3 +22,10 @@ exports.getUserByIdService = async (id) => {
   const result = await User.findOne({ _id: id });
   return result;
 };
+
+exports.updateUserService = async (id, data) => {
+  console.log(data);
+  const result = await User.updateOne({ _id: id }, data);
+  console.log("Result from service", result);
+  return result;
+};
