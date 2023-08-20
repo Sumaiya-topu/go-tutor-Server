@@ -40,17 +40,17 @@ const userSchema = mongoose.Schema(
         message: "Passwords don't match!",
       },
     },
-    // referralCode: {
-    //   type: String,
-    //   default: shortid.generate,
-    // },
+    referralCode: {
+      type: String,
+      default: shortid.generate,
+    },
     // commission: {
     //   type: Number,
     //   default: 0,
     // },
     role: {
       type: String,
-      enum: ["student", "admin", "instructor"],
+      enum: ["student", "admin", "tutor"],
       default: "student",
     },
     isEmailVerified: {
@@ -62,9 +62,11 @@ const userSchema = mongoose.Schema(
       required: [true, "Please provide your Full Name"],
       trim: true,
     },
-    subject: String,
-    biodata: String,
-    language: String,
+    cv: String,
+    department: String,
+    institution: String,
+    backgroundMedium: String,
+    qualification: String,
     address: String,
     studentType: String,
     city: String,
