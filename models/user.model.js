@@ -62,7 +62,7 @@ const userSchema = mongoose.Schema(
       required: [true, "Please provide your Full Name"],
       trim: true,
     },
-    cv: String,
+    cv: Object,
     department: String,
     institution: String,
     backgroundMedium: String,
