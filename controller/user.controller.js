@@ -306,3 +306,31 @@ exports.updateUser = async (req, res) => {
     });
   }
 };
+
+//get user by id
+
+exports.getUserById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const isIdAvaiable = await checkWithIdService(id, User);
+    if (!isIdAvaiable) {
+      return res.status(400).json({
+        status: "fail",
+        message: "couldn't find user",
+      });
+    }
+
+    const user = await getUserByIdService(id);
+
+    res.status(200).json({
+      status: "success",
+      data: user,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "internal error",
+      error: error.message,
+    });
+  }
+};

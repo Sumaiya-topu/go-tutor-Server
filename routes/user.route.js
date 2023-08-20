@@ -6,7 +6,7 @@ router.get("/", userController.getUsers);
 
 router
   .route("/:id")
-  //   .get(userController.getUserById)
+  .get(userController.getUserById)
   //   .delete(userController.deleteUser)
   .patch(userController.updateUser);
 module.exports = router;
