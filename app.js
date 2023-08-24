@@ -7,6 +7,7 @@ const imageUploadRoutes = require("./routes/imageUpload.route");
 
 app.use(express.json());
 app.use(cors());
+app.use(express.static("image"));
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
