@@ -21,3 +21,8 @@ exports.deleteTuition = async (id) => {
   const result = await Tuition.deleteOne({ _id: id });
   return result;
 };
+
+exports.updateTuitionByIdService = async (id, data) => {
+  const result = await Tuition.updateOne({ _id: id }, data);
+  return result;
+};

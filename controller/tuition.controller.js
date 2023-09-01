@@ -4,6 +4,7 @@ const {
   createTuitionService,
   getTuitionByIdService,
   deleteTuition,
+  updateTuitionByIdService,
 } = require("../services/tuition.service.js");
 
 exports.getAllTuition = async (req, res) => {
@@ -118,6 +119,24 @@ exports.deleteTuitionById = async (req, res) => {
       status: "success",
       message: "Deleted Successfully",
       data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      error: error.message,
+    });
+  }
+};
+
+// update tuition by id
+exports.updateTuitionById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const Tuition = await updateTuitionByIdService(id, req.body);
+
+    res.status(200).json({
+      status: "success",
+      data: Tuition,
     });
   } catch (error) {
     res.status(400).json({
