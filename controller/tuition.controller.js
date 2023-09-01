@@ -2,6 +2,9 @@ const Tuition = require("../models/tuition.model.js");
 const {
   getTuitionService,
   createTuitionService,
+  getTuitionByIdService,
+  deleteTuition,
+  updateTuitionByIdService,
 } = require("../services/tuition.service.js");
 
 exports.getAllTuition = async (req, res) => {
@@ -83,6 +86,61 @@ exports.createTuition = async (req, res) => {
     res.status(400).json({
       status: "fail",
       message: "data is not inserted ",
+      error: error.message,
+    });
+  }
+};
+
+//get tuition post by id
+exports.getTuitionById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const tuition = await getTuitionByIdService(id);
+
+    res.status(200).json({
+      status: "success",
+      data: tuition,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      error: error.message,
+    });
+  }
+};
+
+//delete tuition by id
+exports.deleteTuitionById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await deleteTuition(id);
+
+    res.status(200).json({
+      status: "success",
+      message: "Deleted Successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      error: error.message,
+    });
+  }
+};
+
+// update tuition by id
+exports.updateTuitionById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const Tuition = await updateTuitionByIdService(id, req.body);
+
+    res.status(200).json({
+      status: "success",
+      data: Tuition,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
       error: error.message,
     });
   }
