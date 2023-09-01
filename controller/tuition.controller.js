@@ -145,3 +145,12 @@ exports.updateTuitionById = async (req, res) => {
     });
   }
 };
+
+//get tuition post by User id
+exports.getTuitionByUserId = async (req, res) => {
+  const { userId } = req.params;
+
+  const filter = { postedBy: userId };
+  const data = await Tuition.find(filter);
+  res.send(data);
+};
