@@ -5,10 +5,6 @@ const tuitionController = require("../controller/tuition.controller");
 router.get("/", tuitionController.getAllTuition);
 
 router.route("/:id").post(tuitionController.createTuition);
+router.route("/:id").get(tuitionController.getTuitionById);
 
-// router
-//   .route("/:id")
-//   .get(userController.getUserById)
-//   //   .delete(userController.deleteUser)
-//   .patch(userController.updateUser);
 module.exports = router;

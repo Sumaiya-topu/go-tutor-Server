@@ -2,6 +2,7 @@ const Tuition = require("../models/tuition.model.js");
 const {
   getTuitionService,
   createTuitionService,
+  getTuitionByIdService,
 } = require("../services/tuition.service.js");
 
 exports.getAllTuition = async (req, res) => {
@@ -83,6 +84,24 @@ exports.createTuition = async (req, res) => {
     res.status(400).json({
       status: "fail",
       message: "data is not inserted ",
+      error: error.message,
+    });
+  }
+};
+
+//get tuition post by id
+exports.getTuitionById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const tuition = await getTuitionByIdService(id);
+
+    res.status(200).json({
+      status: "success",
+      data: tuition,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
       error: error.message,
     });
   }

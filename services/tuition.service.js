@@ -12,3 +12,8 @@ exports.createTuitionService = async (data) => {
   const result = await Tuition.create(data);
   return result;
 };
+
+exports.getTuitionByIdService = async (id) => {
+  const result = await Tuition.findById(id);
+  return result;
+};
