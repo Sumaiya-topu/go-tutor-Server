@@ -17,3 +17,7 @@ exports.getTuitionByIdService = async (id) => {
   const result = await Tuition.findById(id);
   return result;
 };
+exports.deleteTuition = async (id) => {
+  const result = await Tuition.deleteOne({ _id: id });
+  return result;
+};

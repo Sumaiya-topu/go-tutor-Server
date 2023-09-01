@@ -3,6 +3,7 @@ const {
   getTuitionService,
   createTuitionService,
   getTuitionByIdService,
+  deleteTuition,
 } = require("../services/tuition.service.js");
 
 exports.getAllTuition = async (req, res) => {
@@ -98,6 +99,25 @@ exports.getTuitionById = async (req, res) => {
     res.status(200).json({
       status: "success",
       data: tuition,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      error: error.message,
+    });
+  }
+};
+
+//delete tuition by id
+exports.deleteTuitionById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await deleteTuition(id);
+
+    res.status(200).json({
+      status: "success",
+      message: "Deleted Successfully",
+      data: result,
     });
   } catch (error) {
     res.status(400).json({
