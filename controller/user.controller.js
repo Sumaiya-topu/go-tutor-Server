@@ -16,12 +16,37 @@ const sendEmail = require("../utils/emailSender");
 const { generateToken } = require("../utils/token");
 const { checkWithIdService } = require("../utils/checkWithId");
 
+//maria code
+const tutorSearchableFields = [
+  "preferredSubject",
+  "preferredClass",
+  "preferredArea",
+];
+
 //get all user
 exports.getUsers = async (req, res) => {
   try {
     let filters = { ...req.query };
     const excludesFields = ["sort", "fields", "search"];
 
+    //maria code
+    const { searchTerm } = filters;
+    const andCondition = [];
+
+    if (searchTerm) {
+      andCondition.push({
+        $or: tutorSearchableFields.map((field) => ({
+          [field]: {
+            $regex: searchTerm,
+            $options: "i",
+          },
+        })),
+      });
+    }
+    const whereCondition =
+      andCondition.length > 0 ? { $and: andCondition } : {};
+
+    //maria code end
     excludesFields.forEach((field) => {
       delete filters[field];
     });
@@ -35,6 +60,7 @@ exports.getUsers = async (req, res) => {
           { email: { $regex: req.query.search, $options: "i" } },
           { phone: { $regex: req.query.search, $options: "i" } },
           { fullName: { $regex: req.query.search, $options: "i" } },
+          { preferredSubject: { $regex: req.query.search, $options: "i" } },
         ],
       };
     }
@@ -50,7 +76,7 @@ exports.getUsers = async (req, res) => {
       queries.fields = selectCategory;
     }
 
-    const user = await getUserService(filters, queries);
+    const user = await getUserService(whereCondition, queries);
 
     res.status(200).json({
       status: "success",
@@ -58,6 +84,19 @@ exports.getUsers = async (req, res) => {
         data: user,
       },
     });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "internal error",
+      error: error.message,
+    });
+  }
+};
+
+exports.getUserByRole = async (req, res) => {
+  try {
+    let result = await User.find({ role: "tutor" });
+    res.send(result);
   } catch (error) {
     res.status(400).json({
       status: "fail",
