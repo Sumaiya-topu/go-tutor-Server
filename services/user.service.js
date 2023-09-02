@@ -5,11 +5,11 @@ exports.createSignUpService = async (data) => {
   return result;
 };
 
-exports.getUserService = async (filters, queries) => {
-  const result = await User.find(filters)
-    .select("-password")
+exports.getUserService = async (whereCondition, queries) => {
+  const result = await User.find(whereCondition)
+    // .select("-password")
     .sort(queries.sort);
-  const total = await User.countDocuments(filters);
+  const total = await User.countDocuments(whereCondition);
   return { total, result };
 };
 
