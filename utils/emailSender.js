@@ -12,7 +12,7 @@ const sendEmail = async (recipient, emailType, data, cb) => {
     // },
     auth: {
       user: "topusumaiya@gmail.com",
-      pass: "tjhoztqzquwnuixo", //Usually email senders app password will be inserted here, I am removing mine for my security purpose.
+      pass: "", //Usually email senders app password will be inserted here, I am removing mine for my security purpose.
     },
     tls: {
       ciphers: "SSLv3",
